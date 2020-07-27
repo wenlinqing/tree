@@ -12,20 +12,22 @@
     </div>
 
     <div class="treeBox">
-        <!-- <img class="tree tree1" src="@/assets/images/tree1.png"> -->
+        <img class="tree tree1" src="@/assets/images/tree1.png">
         <!-- <img class="tree tree2" src="@/assets/images/tree2.png"> -->
         <!-- <img class="tree tree3" src="@/assets/images/tree3.png"> -->
-        <img class="tree tree4" src="@/assets/images/tree4.png">
+        <!-- <img class="tree tree4" src="@/assets/images/tree4.png"> -->
         <!-- <div class="goods"><img src="@/assets/images/icon_goods1.png"></div> -->
 
-        <!-- <div class="timeBox">
+        <div class="timeBox" v-if="showTT">
             <img src="@/assets/images/task_operate1.png">
             1:59:59
-        </div> -->
+        </div>
         <div class="treeAction flex">
-            <div class="treeAction1"><img src="@/assets/images/task_operate1.png"></div>
-            <div class="treeAction2"><img src="@/assets/images/task_operate2.png"></div>
-            <div class="treeAction3"><img src="@/assets/images/task_operate3.png"></div>
+            <div class="treeAction1" @click="sashuiFun" v-if="!sashui&&!showTT"><img src="@/assets/images/task_operate1.png"></div>
+            <!-- <div class="treeAction2"><img src="@/assets/images/task_operate2.png"></div> -->
+            <!-- <div class="treeAction3"><img src="@/assets/images/task_operate3.png"></div> -->
+            <!-- sashui -->
+            <div class="actDiv" v-if="sashui"><img src="@/assets/images/tree_sa.png"></div>
         </div>
     </div>
 
@@ -33,7 +35,7 @@
     <div class="topBox">
         <div class="headePic flex">
             <img src="@/assets/images/tipTag.png">
-            张三 心愿树
+            1星 心愿树
         </div>
         <div class="icon_active" @click="actBounceIn=true;aniAction=true;actTag=3"><img src="@/assets/images/icon_active.png"></div>
     </div>
@@ -42,27 +44,27 @@
             <img :class="audioPlay?'rotateImg':''" src="@/assets/images/icon_music_on2.png">
             <!-- <img v-if="!audioPlay" src="@/assets/images/icon_music_off2.png"> -->
         </div>
-        <div class="R_item"><img src="@/assets/images/icon2.png"></div>
-        <div class="R_item"><img src="@/assets/images/icon3.png"></div>
+        <!-- <div class="R_item"><img src="@/assets/images/icon2.png"></div> -->
+        <!-- <div class="R_item"><img src="@/assets/images/icon3.png"></div> -->
     </div>
 
     <div class="bottomBox flex fixed_bottom">
         <div @click="actBounceIn=true;aniAction=true;actTag=2"><img src="@/assets/images/icon_friends.png"></div>
         <!-- <div @click="bounceIn=true;aniAction=true;shopTag='active'"><img src="@/assets/images/icon_task.png"></div> -->
         <div @click="bounceIn=true;aniAction=true;shopTag='shop'"><img src="@/assets/images/icon_store.png"></div>
-        <div><img src="@/assets/images/icon_my.png" @click="bigYunFun"></div>
+        <!-- <div><img src="@/assets/images/icon_my.png" @click="bigYunFun"></div> -->
     </div>
 
     <div class="bottomRight">
         <div class="flex flex_ac">
             <img src="@/assets/images/task_operate1.png">X2
         </div>
-        <div class="flex flex_ac">
+        <!-- <div class="flex flex_ac">
             <img src="@/assets/images/task_operate2.png">X0
         </div>
         <div class="flex flex_ac">
             <img src="@/assets/images/task_operate3.png">X1
-        </div>
+        </div> -->
     </div>
 
     <!-- bounceInUpAni -->
@@ -78,11 +80,11 @@
             <div class="contInfo bgfff" style="border:none;">
                 <div class="shopBox">
                     <div class="navs flex">
-                        <div :class="shopTag=='active'?'on':''" @click="shopTag='active'">任务</div>
+                        <div :class="shopTag=='active'?'on':''" @click="shopTag='active'">兑换</div>
                         <div :class="shopTag=='shop'?'on':''" @click="shopTag='shop'">商店</div>
                     </div>
                     <div class="shopCont" v-if="shopTag=='active'">
-                        <div class="items flex flex_ac flexbetween">
+                        <!-- <div class="items flex flex_ac flexbetween">
                             <div class="itemL">
                                 <img class="l_icon" src="@/assets/images/task_sign.png">
                                 <h2>每日签到</h2>
@@ -122,6 +124,19 @@
                                 <span>邀请</span>
                                 <p>0/1</p>
                             </div>
+                        </div> -->
+                        <div class="items flex flex_ac flexbetween">
+                            <div class="itemL">
+                                <img class="l_icon" src="@/assets/images/icon_goods1.png">
+                                <h2>能量值</h2>
+                                <p class="flex flex_ac">可用 
+                                    <img class="sub_icon" src="@/assets/images/icon_goods1.png">X100
+                                </p>
+                            </div>
+                            <div class="itemR">
+                                <span>兑换</span>
+                                <!-- <p>0/1</p> -->
+                            </div>
                         </div>
                     </div>
                     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -150,6 +165,14 @@
                             </div>
                             <span>购买</span>
                         </div>
+                        <div class="items flex flex_ac flexbetween">
+                            <div class="itemL">
+                                <img class="l_icon" src="@/assets/images/icon_goods1.png">
+                                <h2>能量</h2>
+                                <p><b>30</b>能量/个</p>
+                            </div>
+                            <span>购买</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,7 +186,7 @@
                 <div class="shopBox">
                     <div class="navs flex">
                         <div :class="actTag==1?'on':''" @click="actTag=1">活动说明</div>
-                        <div :class="actTag==2?'on':''" @click="actTag=2">好友排行</div>
+                        <div :class="actTag==2?'on':''" @click="actTag=2">玩家排行</div>
                         <div :class="actTag==3?'on':''" @click="actTag=3">动态</div>
                     </div>
                     <div class="shopCont" style="padding-top: 0;" v-if="actTag==1">
@@ -194,8 +217,8 @@
                             <img src="@/assets/images/tipTag.png">
                             <div>
                                 <h2>张三</h2>
-                                <p>最好成绩<span>0</span></p>
-                                <p>好友排名<span>2</span></p>
+                                <p>能量值<span>0</span>/300</p>
+                                <p>可&nbsp;&nbsp;&nbsp;用<span>2</span></p>
                             </div>
                         </div>
                         <div style="height: 10px;background: #f2f2f2;"></div>
@@ -206,7 +229,7 @@
                                 <p class="txtelli">32次走位</p>
                             </div>
                             <b>0</b>
-                            <span>去看看</span>
+                            <span @click="bigYunFun">去看看</span>
                         </div>
                         <div class="friends flex flexbetween">
                             <img class="paiImg flexauto" src="@/assets/images/tops_2.png">
@@ -215,7 +238,7 @@
                                 <p class="txtelli">0000</p>
                             </div>
                             <b>0</b>
-                            <span>去看看</span>
+                            <span @click="bigYunFun">去看看</span>
                         </div>
                         <div class="friends flex flexbetween">
                             <img class="paiImg flexauto" src="@/assets/images/tops_3.png">
@@ -224,7 +247,7 @@
                                 <p class="txtelli">2222222222222</p>
                             </div>
                             <b>0</b>
-                            <span>去看看</span>
+                            <span @click="bigYunFun">去看看</span>
                         </div>
                     </div>
 
@@ -245,19 +268,16 @@
     <div style="height: 300px"></div>
     <audio src="./static/audio.mp3" id="audio" refs="audio" autoplay loop ></audio>
 
-
-    <div class="loading" :style="loading?'':'display:none'"></div>
-
-
-    <!-- 领养树 -->
-    <div class="getTree fixed" v-if="!hasTree">
-        <div class="getBtn" @click="getTreeFun"><img src="@/assets/images/btn_start.png"></div>
-    </div>
-
     <div class="bigYunBox" :style="bigYun?'display:block':'display:none'">
+        <div class="yun1 open"></div>
+        <div class="yun2 open"></div>
+    </div>
+    <div class="bigYunBox" :style="bigYun2?'display:block':'display:none'">
         <div class="yun1"></div>
         <div class="yun2"></div>
     </div>
+
+    <div class="goBack"><img src="@/assets/images/back.png"></div>
 </div>
 </template>
 
@@ -273,18 +293,17 @@ export default {
       brand:1,
 
       shopTag:'shop',
-      loading:true,
-      hasTree:sessionStorage.getItem('hasTree')||false,
-      bigYun:false,
+      bigYun:true,
+      bigYun2:false,
       actBounceIn:false,
       actTag:1,
+      sashui:false,
+      showTT:false,
     }
   },
   mounted(){
     setTimeout(()=>{
-        // var audio=document.getElementById('audio')
-        this.loading=false
-        // this.$refs.audio.play()
+        this.bigYun=false
     },1500)
 
     setInterval(()=>{
@@ -301,17 +320,17 @@ export default {
     },15000)
   },
   methods:{
-    bigYunFun(){
-        this.bigYun=true
+    sashuiFun(){
+        this.sashui=true
         setTimeout(()=>{
-            this.bigYun=false
-        },2500)
+            this.showTT=true;
+            this.sashui=false
+        },2700)
     },
-    getTreeFun(){
-        this.bigYunFun()
+    bigYunFun(){
+        this.bigYun2=true
         setTimeout(()=>{
-            this.hasTree=true
-            sessionStorage.setItem('hasTree',true)
+            this.$router.push('/friends')
         },1000)
     },
     closeDiaFun(){
@@ -334,3 +353,4 @@ export default {
   }
 }
 </script>
+<style scoped></style>
